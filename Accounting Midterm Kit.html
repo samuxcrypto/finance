@@ -1,0 +1,770 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Accounting Midterm Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky tab bar over a single working column; debit = blue, credit = rose throughout */
+:root{
+  --bg:#f2f5f3; --surface:#ffffff; --ink:#15211d; --muted:#556760; --line:#d3ddd8; --soft:#e5eee9;
+  --accent:#0e6b57; --accent-ink:#ffffff; --dr:#1f55c4; --cr:#b0305a;
+  --good:#1b7f4b; --good-bg:#dff3e8; --bad:#c23a2e; --bad-bg:#fbe5e2; --warn:#8a5a00; --warn-bg:#fbf0d6;
+  --font-head:"Space Grotesk",system-ui,sans-serif; --font-body:"Inter",system-ui,sans-serif; --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1714; --surface:#17211d; --ink:#e6efeb; --muted:#9bb0a8; --line:#2a3a34; --soft:#1e2c26;
+  --accent:#4cc3a3; --accent-ink:#06231b; --dr:#7aa2ff; --cr:#ff8fb0;
+  --good:#58d08f; --good-bg:#16352a; --bad:#ff7d70; --bad-bg:#3a1f1c; --warn:#e0a84a; --warn-bg:#35290f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1714; --surface:#17211d; --ink:#e6efeb; --muted:#9bb0a8; --line:#2a3a34; --soft:#1e2c26;
+  --accent:#4cc3a3; --accent-ink:#06231b; --dr:#7aa2ff; --cr:#ff8fb0;
+  --good:#58d08f; --good-bg:#16352a; --bad:#ff7d70; --bad-bg:#3a1f1c; --warn:#e0a84a; --warn-bg:#35290f; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
+h1,h2,h3{font-family:var(--font-head);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.7rem}
+h2{font-size:1.25rem;margin-bottom:10px}
+h3{font-size:1rem;margin:18px 0 6px}
+p{margin:0 0 10px}
+.sub{color:var(--muted);margin-top:4px}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.dr{color:var(--dr)} .cr{color:var(--cr)}
+
+header.top{padding-bottom:14px}
+.countdown{display:inline-block;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:18px;
+  display:flex;gap:4px;overflow-x:auto;padding:6px 0}
+nav.tabs button{flex:0 0 auto;border:0;background:transparent;color:var(--muted);font:600 .9rem var(--font-body);padding:9px 14px;border-radius:8px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+nav.tabs button:hover:not([aria-selected="true"]){background:var(--soft);color:var(--ink)}
+button:focus-visible,summary:focus-visible,.card:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.panel{display:none} .panel.on{display:block}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.grid2>*{min-width:0}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 .88rem var(--font-body);padding:9px 14px;border-radius:8px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.good{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+.btn.bad{background:var(--bad-bg);color:var(--bad);border-color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);font:600 .8rem var(--font-body);padding:6px 11px;border-radius:99px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--accent)}
+.tag{font:600 .7rem var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+
+/* revise */
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:10px}
+summary{cursor:pointer;padding:14px 16px;font:700 1rem var(--font-head);list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--accent);font-size:1.2rem;line-height:1}
+details[open] summary::after{content:"–"}
+.dbody{padding:0 16px 16px}
+.dbody ul{margin:4px 0 10px;padding-left:20px} .dbody li{margin:3px 0}
+.tw{overflow-x:auto;margin:8px 0 12px}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{font:600 .72rem var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+td.n,th.n{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{background:var(--warn-bg);color:var(--ink);border-left:3px solid var(--warn);padding:10px 12px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.92rem}
+.formula{font-family:var(--font-mono);background:var(--soft);padding:8px 12px;border-radius:8px;display:inline-block;margin:4px 0;font-size:.88rem}
+table.je{width:auto;min-width:260px;font-family:var(--font-mono);font-size:.84rem;margin:4px 0}
+table.je td{padding:3px 10px;border-bottom:0}
+table.je td:first-child{padding-left:0}
+table.je tr.c td:first-child{padding-left:22px}
+table.je td.d{color:var(--dr);text-align:right} table.je td.k{color:var(--cr);text-align:right}
+table.je th{padding:3px 10px}
+
+/* flashcards */
+.card{min-height:210px;display:flex;align-items:center;justify-content:center;text-align:center;padding:26px;cursor:pointer;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;font-size:1.12rem;font-family:var(--font-head);font-weight:500}
+.card.back{background:var(--soft);font-family:var(--font-body);font-weight:400;font-size:1rem;text-align:left;justify-content:flex-start;align-items:flex-start;white-space:pre-line}
+.meter{height:6px;border-radius:99px;background:var(--soft);overflow:hidden;margin:10px 0}
+.meter>i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+
+/* quiz */
+.q{font:600 1.05rem var(--font-head);margin:6px 0 14px}
+.opt{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);color:var(--ink);font:400 .95rem var(--font-body);padding:11px 14px;border-radius:8px;margin-bottom:8px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.ok{background:var(--good-bg);border-color:var(--good)}
+.opt.no{background:var(--bad-bg);border-color:var(--bad)}
+.opt:disabled{cursor:default;opacity:1}
+.expl{background:var(--soft);padding:10px 12px;border-radius:8px;margin:8px 0 12px;font-size:.92rem}
+.score{font:700 2.4rem var(--font-head)}
+.bar{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:.88rem}
+.bar b{flex:0 0 150px;font-weight:500} .bar .meter{flex:1;margin:0} .bar span{flex:0 0 50px;text-align:right}
+.miss{border-top:1px solid var(--line);padding:10px 0}
+
+/* paktel */
+.pt td,.pt th{padding:6px 8px}
+.pt tr.eff td{color:var(--muted)}
+.pt tr.bal td{font-weight:600;background:var(--soft)}
+.pt tr.hid{display:none}
+.chk{font-family:var(--font-mono);font-size:.82rem}
+.chk.ok{color:var(--good)}
+
+textarea.prompt{width:100%;min-height:340px;font:400 .84rem/1.5 var(--font-mono);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px;resize:vertical}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:520px){.bar b{flex-basis:96px}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="countdown">Midterm in 2 days · Weeks 1–6</div>
+    <h1>Accounting Midterm Kit</h1>
+    <p class="sub">Built from your slides: accounting basics, journal and ledger, financial statements, adjusting entries, plus the PakTel practice question.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" data-tab="revise" aria-selected="true">Revise</button>
+    <button role="tab" data-tab="cards" aria-selected="false">Flashcards</button>
+    <button role="tab" data-tab="quiz" aria-selected="false">Quiz</button>
+    <button role="tab" data-tab="lab" aria-selected="false">Journal lab</button>
+    <button role="tab" data-tab="pak" aria-selected="false">PakTel</button>
+    <button role="tab" data-tab="prompt" aria-selected="false">AI prompt</button>
+  </nav>
+
+  <!-- REVISE -->
+  <section class="panel on" id="p-revise">
+    <div class="box" style="margin-bottom:12px">
+      <h2>Two-day plan</h2>
+      <div class="grid2">
+        <div><span class="tag">Day 1</span>
+          <ul style="margin:6px 0 0;padding-left:20px">
+            <li>Read Weeks 1 and 2–3 below (30 min)</li>
+            <li>Flashcards: Week 1 and 2–3 until all known</li>
+            <li>Journal lab: all drills, write the entry before revealing</li>
+            <li>Quiz: Week 1 and 2–3, then retry misses</li>
+          </ul></div>
+        <div><span class="tag">Day 2</span>
+          <ul style="margin:6px 0 0;padding-left:20px">
+            <li>Read Weeks 3–4 and 5–6 (30 min)</li>
+            <li>Do PakTel on paper first, then check it here</li>
+            <li>Full 20-question quiz, then retry misses</li>
+            <li>Last hour: read the watch-outs and rules table only</li>
+          </ul></div>
+      </div>
+    </div>
+
+    <details open>
+      <summary>Week 1 · Accounting basics (Chapter 1)</summary>
+      <div class="dbody">
+        <h3>Core ideas</h3>
+        <ul>
+          <li><b>Three types of information:</b> financial, managerial, tax.</li>
+          <li><b>Accounting system does three things:</b> interpret and record transactions, classify similar transactions into reports, summarize and communicate to decision makers.</li>
+          <li><b>External users:</b> owners, creditors, labor unions, government agencies, suppliers, customers, trade associations, general public. <b>Internal users:</b> board, CEO, CFO, VPs, business unit, plant and store managers, line supervisors.</li>
+          <li><b>Financial reporting objectives.</b> General: info useful for investment and credit decisions. Also: assess amount, timing and uncertainty of future cash flows. Specific: info about economic resources, claims to them, and changes in both.</li>
+          <li><b>Management accounting objectives:</b> help achieve goals and missions; help evaluate and reward decision makers.</li>
+          <li><b>Management accounting is:</b> timely, tied to a specific decision maker, future-oriented, a measure of efficiency and effectiveness, a means to an end.</li>
+          <li><b>Integrity of information:</b> GAAP, FASB, SEC, internal control structure, audits, legislation.</li>
+        </ul>
+        <h3>The six elements</h3>
+        <div class="tw"><table>
+          <tr><th>Element</th><th>Meaning</th><th>Examples</th></tr>
+          <tr><td>Assets</td><td>Resources owned or controlled with future economic benefit. Current (short-term) or non-current.</td><td>Cash, receivables, machinery</td></tr>
+          <tr><td>Liabilities</td><td>Obligations to outsiders from past transactions. Current or non-current.</td><td>Accounts payable, loans, salaries payable</td></tr>
+          <tr><td>Owner's equity</td><td>Residual interest: assets minus liabilities.</td><td>Capital, retained earnings, drawings</td></tr>
+          <tr><td>Revenues</td><td>Earnings from core activities.</td><td>Sales, service revenue, interest income</td></tr>
+          <tr><td>Expenses</td><td>Costs incurred to generate revenue.</td><td>Rent, utilities, salary, depreciation</td></tr>
+        </table></div>
+        <p><span class="formula">Assets = Liabilities + Owner's Equity</span> &nbsp; <span class="formula">OE = Capital + Revenues − Expenses − Drawings</span></p>
+        <h3>Rules of debit and credit</h3>
+        <div class="tw"><table>
+          <tr><th>Account type</th><th>Increase</th><th>Decrease</th><th>Normal balance</th></tr>
+          <tr><td>Asset</td><td class="dr">Debit</td><td class="cr">Credit</td><td>Debit</td></tr>
+          <tr><td>Expense</td><td class="dr">Debit</td><td class="cr">Credit</td><td>Debit</td></tr>
+          <tr><td>Drawings</td><td class="dr">Debit</td><td class="cr">Credit</td><td>Debit</td></tr>
+          <tr><td>Liability</td><td class="cr">Credit</td><td class="dr">Debit</td><td>Credit</td></tr>
+          <tr><td>Revenue / Income</td><td class="cr">Credit</td><td class="dr">Debit</td><td>Credit</td></tr>
+          <tr><td>Capital</td><td class="cr">Credit</td><td class="dr">Debit</td><td>Credit</td></tr>
+        </table></div>
+        <h3>Confusing terms</h3>
+        <ul>
+          <li><b>Unearned revenue:</b> cash received, service not yet delivered. A liability.</li>
+          <li><b>Deferred expense:</b> paid in advance, not yet used. An asset.</li>
+          <li><b>Accrued expense:</b> used or incurred, not yet paid. Creates a liability.</li>
+          <li><b>Contingent liability:</b> may or may not occur, depending on a future event.</li>
+        </ul>
+        <div class="callout">Drawings are not on the slides' list of debit/credit rules but appear in the OE formula. They are a debit that reduces equity, and they are never an expense.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Weeks 2–3 · Journal, ledger, T-accounts (JJ's Lawn Care)</summary>
+      <div class="dbody">
+        <ul>
+          <li><b>General journal columns:</b> Date, Description (account titles and explanation), Debit, Credit. Debit account first, credit account indented.</li>
+          <li><b>Ledger:</b> the entire group of accounts. <b>Account:</b> an individual record of increases and decreases.</li>
+          <li><b>T-account:</b> debit on the left, credit on the right.</li>
+          <li><b>Double entry:</b> every transaction has equal debits and credits. Debit balances = credit balances, so A = L + OE always holds.</li>
+          <li><b>Posting:</b> copying journal entries into the ledger accounts, then finding each ending balance.</li>
+          <li><b>British ledger format:</b> two-sided T style, Dr and Cr halves each with Date, Particulars, J.F., Amount. <b>American format:</b> one running table with Date, Description, Ref, Debit, Credit, <b>Balance</b>.</li>
+        </ul>
+        <h3>All nine JJ's entries (memorise the pattern, not the numbers)</h3>
+        <div id="jjEntries" class="grid2"></div>
+        <h3>Ending balances, May 31</h3>
+        <div class="tw"><table>
+          <tr><th>Account</th><th class="n">Balance</th><th>Working</th></tr>
+          <tr><td>Cash (Dr)</td><td class="n">4,125</td><td class="mono">8,000 − 2,500 − 2,000 + 75 − 150 + 750 − 50</td></tr>
+          <tr><td>Accounts receivable (Dr)</td><td class="n">75</td><td class="mono">150 − 75</td></tr>
+          <tr><td>Tools &amp; equipment (Dr)</td><td class="n">2,650</td><td class="mono">2,500 + 300 − 150</td></tr>
+          <tr><td>Truck (Dr)</td><td class="n">15,000</td><td class="mono">15,000</td></tr>
+          <tr><td>Notes payable (Cr)</td><td class="n">13,000</td><td class="mono">13,000</td></tr>
+          <tr><td>Accounts payable (Cr)</td><td class="n">150</td><td class="mono">300 − 150</td></tr>
+          <tr><td>Capital (Cr)</td><td class="n">8,000</td><td class="mono">8,000</td></tr>
+          <tr><td>Services revenue (Cr)</td><td class="n">750</td><td class="mono">750</td></tr>
+          <tr><td>Expenses (Dr)</td><td class="n">50</td><td class="mono">50</td></tr>
+        </table></div>
+        <div class="callout">May 18 trips people up: selling half the parts <b>at cost</b> is not revenue. It swaps one asset (equipment/parts) for another (receivable), so no gain or loss.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Weeks 3–4 · Financial statements</summary>
+      <div class="dbody">
+        <div class="tw"><table>
+          <tr><th>Statement</th><th>Tells you</th><th>Time frame</th></tr>
+          <tr><td>Income statement</td><td>Revenues − expenses = net income (or loss)</td><td>A period</td></tr>
+          <tr><td>Balance sheet</td><td>Where the enterprise stands: assets, liabilities, owner's equity</td><td>A specific date</td></tr>
+          <tr><td>Statement of cash flows</td><td>How cash changed</td><td>A period</td></tr>
+        </table></div>
+        <ul>
+          <li>Revenues bring positive cash flow, expenses negative, whether in the past, present or future.</li>
+          <li><b>Owner investments and payments to owners are not on the income statement.</b></li>
+          <li><b>Operating:</b> cash effects of revenue and expense transactions. <b>Investing:</b> cash effects of buying and selling assets. <b>Financing:</b> cash effects of dealings with owners and creditors.</li>
+        </ul>
+        <h3>JJ's, month ended May 31</h3>
+        <div class="grid2">
+          <div class="tw"><table>
+            <tr><th colspan="2">Income statement</th></tr>
+            <tr><td>Services revenue</td><td class="n">750</td></tr>
+            <tr><td>Gasoline expense</td><td class="n">(50)</td></tr>
+            <tr><td><b>Net income</b></td><td class="n"><b>700</b></td></tr>
+          </table></div>
+          <div class="tw"><table>
+            <tr><th colspan="2">Statement of cash flows</th></tr>
+            <tr><td>Operating (750 − 50)</td><td class="n">700</td></tr>
+            <tr><td>Investing (lawn mower 2,500, truck 2,000, parts 150, collection +75)</td><td class="n">(4,575)</td></tr>
+            <tr><td>Financing (owner investment)</td><td class="n">8,000</td></tr>
+            <tr><td><b>Increase in cash = ending cash</b></td><td class="n"><b>4,125</b></td></tr>
+          </table></div>
+        </div>
+        <div class="tw"><table>
+          <tr><th>Balance sheet May 31</th><th class="n">Amount</th><th></th><th class="n">Amount</th></tr>
+          <tr><td>Cash</td><td class="n">4,125</td><td>Notes payable</td><td class="n">13,000</td></tr>
+          <tr><td>Accounts receivable</td><td class="n">75</td><td>Accounts payable</td><td class="n">150</td></tr>
+          <tr><td>Tools &amp; equipment</td><td class="n">2,650</td><td><b>Total liabilities</b></td><td class="n">13,150</td></tr>
+          <tr><td>Truck</td><td class="n">15,000</td><td>Capital + net income (8,000 + 700)</td><td class="n">8,700</td></tr>
+          <tr><td><b>Total assets</b></td><td class="n"><b>21,850</b></td><td><b>Total L + OE</b></td><td class="n"><b>21,850</b></td></tr>
+        </table></div>
+        <div class="callout">Cash check: net income 700 is not the cash change. Cash rose 4,125 because of 8,000 financing and 4,575 spent on investing.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Weeks 5–6 · Accruals and deferrals (adjusting entries)</summary>
+      <div class="dbody">
+        <ul>
+          <li>Adjusting entries are needed when revenue or expenses affect <b>more than one accounting period</b>.</li>
+          <li>Every adjusting entry changes <b>one income statement account (revenue or expense) and one balance sheet account (asset or liability)</b>. Cash is never in an adjusting entry.</li>
+        </ul>
+        <div class="tw"><table>
+          <tr><th>Type</th><th>Before</th><th>Adjusting entry</th><th>Examples</th></tr>
+          <tr><td>1. Asset → expense (deferral)</td><td>Cash paid first; asset recorded</td><td><span class="dr">Dr Expense</span> / <span class="cr">Cr Asset</span></td><td>Depreciation, supplies, insurance</td></tr>
+          <tr><td>2. Liability → revenue (deferral)</td><td>Cash received first; liability recorded</td><td><span class="dr">Dr Unearned revenue</span> / <span class="cr">Cr Revenue</span></td><td>Airline tickets, season tickets, advance rent</td></tr>
+          <tr><td>3. Accrue unpaid expense</td><td>Expense used, cash not yet paid</td><td><span class="dr">Dr Expense</span> / <span class="cr">Cr Payable</span></td><td>Interest, wages, property tax</td></tr>
+          <tr><td>4. Accrue uncollected revenue</td><td>Revenue earned, cash not yet received</td><td><span class="dr">Dr Receivable</span> / <span class="cr">Cr Revenue</span></td><td>Interest earned, work done but unbilled</td></tr>
+        </table></div>
+        <h3>Slide examples worked</h3>
+        <div id="adjEntries" class="grid2"></div>
+        <h3>Depreciation</h3>
+        <ul>
+          <li>Systematic allocation of a depreciable asset's cost to expense. It is an <b>estimate</b>.</li>
+          <li><span class="formula">Straight-line = Cost ÷ Estimated useful life</span></li>
+          <li>Lawn mower: 2,500 ÷ 50 months = <b>50/month</b>. Truck: 15,000 ÷ 60 months = <b>250/month</b>.</li>
+          <li>Entry: <span class="dr">Dr Depreciation expense</span> / <span class="cr">Cr Accumulated depreciation</span>. Accumulated depreciation is a <b>contra-asset</b> (credit balance), deducted from the asset on the balance sheet. Mower book value after one month: 2,500 − 50 = 2,450.</li>
+          <li><b>Methods:</b> straight-line (even), units of production (usage or output), double-declining balance (accelerated), sum-of-the-years' digits (accelerated, remaining life ÷ sum of digits).</li>
+          <li>Income tax: a corporation accrues <span class="dr">Dr Income taxes expense</span> / <span class="cr">Cr Income taxes payable</span> (slide example 780). It is the final adjusting entry.</li>
+        </ul>
+        <h3>Cycle order from the slides</h3>
+        <p>Journalize transactions → post to ledger → prepare trial balance → make end-of-year adjustments → prepare adjusted trial balance.</p>
+        <div class="callout">Income statement side gets what was used or earned this period. Balance sheet side holds what benefits or is owed in future periods. If an exam asks why an entry matters, say it in those terms.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Watch-outs for the exam</summary>
+      <div class="dbody">
+        <ul>
+          <li>The Week 5–6 adjusted trial balance slide shows cash 3,925 and a 200 dividend, and the partial balance sheet slide shows capital 8,125. These differ from the Week 2–4 figures (cash 4,125, capital 8,000). Know the Week 2–4 numbers as the base case and treat those two slides as a variation.</li>
+          <li>The slide deck spells it "Debt (Dr.)" in the journal header. It means Debit.</li>
+          <li>Depreciation expense is an income statement item. Accumulated depreciation sits on the balance sheet.</li>
+          <li>Net income and cash change are different numbers. Revenue earned on account raises income, not cash.</li>
+          <li>Equity entries for cash payments: owner withdrawals (drawings) reduce equity but never touch the income statement.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section class="panel" id="p-cards">
+    <h2>Flashcards</h2>
+    <div class="chips" id="cardFilter"></div>
+    <div class="meter"><i id="cardMeter"></i></div>
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><span class="tag" id="cardCount"></span><span class="tag" id="cardTag"></span></div>
+    <div class="card" id="theCard" tabindex="0" role="button" aria-label="Flip card"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn bad" id="cMiss">Missed it</button>
+      <button class="btn good" id="cGot">Got it</button>
+      <button class="btn" id="cFlip">Flip</button>
+      <button class="btn" id="cShuf">Shuffle</button>
+      <button class="btn" id="cReset">Reset progress</button>
+    </div>
+    <p class="sub" style="margin-top:10px">Keys: Space flips, Right arrow = got it, Left arrow = missed. Missed cards come back at the end of the deck.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="panel" id="p-quiz">
+    <div id="quizSetup">
+      <h2>Quiz</h2>
+      <p class="sub">Pick the topics and length. Every answer shows the reason straight away.</p>
+      <h3>Topics</h3>
+      <div class="chips" id="qWeeks"></div>
+      <h3>Length</h3>
+      <div class="chips" id="qLen"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="qStart">Start quiz</button><button class="btn" id="qRetry" hidden>Retry last misses</button></div>
+    </div>
+    <div id="quizRun" hidden></div>
+    <div id="quizDone" hidden></div>
+  </section>
+
+  <!-- LAB -->
+  <section class="panel" id="p-lab">
+    <h2>Journal lab</h2>
+    <p class="sub">Write the entry on paper first. Reveal it, then mark yourself honestly. Debits are blue, credits are rose.</p>
+    <div class="row" style="margin:10px 0"><span class="tag" id="labScore"></span><button class="btn" id="labReset">Reset</button></div>
+    <div id="labList"></div>
+  </section>
+
+  <!-- PAKTEL -->
+  <section class="panel" id="p-pak">
+    <h2>PakTel Solutions practice question</h2>
+    <p class="sub">Set up the same table on paper (Cash, Land, Building, Office Equipment = Notes Payable, Accounts Payable, Capital Stock, plus a column for January profit). Do each row, then reveal it here.</p>
+    <div class="callout">Two things in the question to decide on, and what this page assumes. (1) The Jan 31 revenue and expenses are treated as cash. (2) The table shows accounts payable of 80,000 at Dec 31, but Jan 21 says 68,500 was "paid off". It is treated as a partial payment, leaving 11,500 of the old balance. Ask your instructor if the 68,500 was meant to clear it all. The final totals below would change by 11,500 in that case.</div>
+    <div class="row" style="margin:10px 0">
+      <button class="btn primary" id="pkNext">Reveal next transaction</button>
+      <button class="btn" id="pkAll">Reveal all</button>
+      <button class="btn" id="pkReset">Hide all</button>
+    </div>
+    <div class="tw"><table class="pt" id="pkTable"></table></div>
+    <div id="pkFinal" hidden></div>
+  </section>
+
+  <!-- PROMPT -->
+  <section class="panel" id="p-prompt">
+    <h2>AI tutor prompt</h2>
+    <p class="sub">Paste this into any AI chat (with your slides attached if you can) to keep testing yourself beyond this page.</p>
+    <textarea class="prompt" id="promptBox" readonly></textarea>
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="copyPrompt">Copy prompt</button><span class="tag" id="copyMsg"></span></div>
+  </section>
+</div>
+
+<script>
+/* ---------- storage helpers ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const WK={w1:"Week 1",w23:"Weeks 2–3",w34:"Weeks 3–4",w56:"Weeks 5–6"};
+const WL={w1:"Accounting basics",w23:"Journal and ledger",w34:"Financial statements",w56:"Adjusting entries"};
+const fmt=n=>n===0?"–":(n<0?"("+Math.abs(n).toLocaleString("en-US")+")":n.toLocaleString("en-US"));
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------- tabs ---------- */
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+b.dataset.tab));
+  window.scrollTo({top:0});
+}));
+
+/* ---------- journal entry renderer ---------- */
+function je(rows){ // rows: [account, debit|null, credit|null]
+  return `<table class="je"><tr><th></th><th class="n">Debit</th><th class="n">Credit</th></tr>`+
+    rows.map(r=>`<tr class="${r[2]!=null&&r[1]==null?"c":""}"><td>${r[0]}</td><td class="d">${r[1]!=null?r[1].toLocaleString("en-US"):""}</td><td class="k">${r[2]!=null?r[2].toLocaleString("en-US"):""}</td></tr>`).join("")+`</table>`;
+}
+
+const JJ=[
+ ["May 1","Jill invests 8,000 for 800 shares",[["Cash",8000,null],["Capital",null,8000]]],
+ ["May 2","Buys riding mower for cash",[["Tools &amp; Equipment",2500,null],["Cash",null,2500]]],
+ ["May 8","Truck 15,000: 2,000 cash, 13,000 note",[["Truck",15000,null],["Cash",null,2000],["Notes Payable",null,13000]]],
+ ["May 11","Repair parts on account",[["Tools &amp; Equipment",300,null],["Accounts Payable",null,300]]],
+ ["May 18","Sells half the parts at cost on account",[["Accounts Receivable",150,null],["Tools &amp; Equipment",null,150]]],
+ ["May 25","ABC pays 75 of receivable",[["Cash",75,null],["Accounts Receivable",null,75]]],
+ ["May 28","Pays 150 of payables",[["Accounts Payable",150,null],["Cash",null,150]]],
+ ["May 29","Lawn services for cash",[["Cash",750,null],["Services Revenue",null,750]]],
+ ["May 31","Gasoline for cash",[["Expenses",50,null],["Cash",null,50]]]
+];
+$("#jjEntries").innerHTML=JJ.map(e=>`<div class="box"><span class="tag">${e[0]}</span><p style="margin:2px 0 6px;font-size:.88rem">${e[1]}</p>${je(e[2])}</div>`).join("");
+
+const ADJ=[
+ ["Insurance (asset → expense)","Jan 1 pay 2,400 for 12 months. Jan 31 adjust 200.",[["Insurance Expense",200,null],["Unexpired (Prepaid) Insurance",null,200]]],
+ ["Advance rent (liability → revenue)","Jan 1 collect 6,000 for 12 months. Jan 31 adjust 500.",[["Unearned Rental Revenue",500,null],["Rental Revenue",null,500]]],
+ ["Accrued wages, May 31","Owed 3,000, payday Friday June 2.",[["Wages Expense",3000,null],["Wages Payable",null,3000]]],
+ ["Payday June 2","Pay 5,000 (3,000 accrued, 2,000 new).",[["Wages Expense",2000,null],["Wages Payable",3000,null],["Cash",null,5000]]],
+ ["Accrued interest, Jan 31","Bank owes 170.",[["Interest Receivable",170,null],["Interest Revenue",null,170]]],
+ ["Interest received, Feb 15","Collect 320: 170 old, 150 new.",[["Cash",320,null],["Interest Revenue",null,150],["Interest Receivable",null,170]]],
+ ["Depreciation, JJ's mower","2,500 ÷ 50 months.",[["Depreciation Expense: Equipment",50,null],["Accumulated Depreciation: Equipment",null,50]]],
+ ["Income taxes, Dec 31","Estimated tax 780.",[["Income Taxes Expense",780,null],["Income Taxes Payable",null,780]]]
+];
+$("#adjEntries").innerHTML=ADJ.map(e=>`<div class="box"><b style="font-size:.92rem">${e[0]}</b><p style="margin:2px 0 6px;font-size:.84rem;color:var(--muted)">${e[1]}</p>${je(e[2])}</div>`).join("");
+
+/* ---------- flashcards ---------- */
+const CARDS=[
+["w1","Three types of accounting information","Financial, managerial, tax."],
+["w1","Three basic functions of an accounting system","1. Interpret and record business transactions.\n2. Classify similar transactions into useful reports.\n3. Summarize and communicate information to decision makers."],
+["w1","Name five external users","Owners, creditors, labor unions, government agencies, suppliers, customers, trade associations, general public (any five)."],
+["w1","Name five internal users","Board of directors, CEO, CFO, vice presidents, business unit, plant and store managers, line supervisors."],
+["w1","General objectives of financial reporting","Information useful for investment and credit decisions, and for assessing the amount, timing and uncertainty of future cash flows."],
+["w1","Specific objective of financial reporting","Information about economic resources, claims to those resources, and changes in them."],
+["w1","The three primary financial statements","Income statement, balance sheet, statement of cash flows."],
+["w1","Two objectives of management accounting","Help achieve goals and missions; help evaluate and reward decision makers."],
+["w1","Five characteristics of management accounting information","Timely; identifies the decision maker; oriented toward the future; measures efficiency and effectiveness; a means to an end."],
+["w1","Institutional features that protect integrity","GAAP, FASB, SEC, internal control structure, audits, legislation."],
+["w1","Define asset","Resource owned or controlled with economic value and expected future benefit. Current (short-term) or non-current (long-term)."],
+["w1","Define liability","Financial obligation to an external party arising from past transactions, settled with money, goods or services. Current or non-current."],
+["w1","Define owner's equity","Owner's residual interest: assets minus liabilities. Capital, retained earnings, drawings."],
+["w1","Owner's equity formula","Capital + Revenues − Expenses − Drawings"],
+["w1","Which accounts increase with a DEBIT?","Assets, expenses (and drawings)."],
+["w1","Which accounts increase with a CREDIT?","Liabilities, revenue/income, capital."],
+["w1","Unearned revenue","Cash received for goods or services not yet delivered. A liability."],
+["w1","Deferred expense","Paid in advance, not yet used. An asset until used."],
+["w1","Accrued expense","Incurred but not yet paid. Creates a liability."],
+["w1","Contingent liability","A potential liability that may or may not occur depending on a future event."],
+["w23","General journal columns","Date, Description (account titles and explanation), Debit, Credit."],
+["w23","What is the ledger?","The entire group of accounts kept together."],
+["w23","What is an account?","An individual record showing increases and decreases."],
+["w23","T-account: which side is debit?","Left = debit, right = credit."],
+["w23","Double-entry principle","Every transaction is recorded with equal amounts of debits and credits, so A = L + OE always balances."],
+["w23","What is posting?","Transferring journal entry amounts to the ledger accounts, then finding balances."],
+["w23","British vs American ledger format","British: two-sided T style (Date, Particulars, J.F., Amount on each side). American: single table with Date, Description, Ref, Debit, Credit and a running Balance column."],
+["w23","JJ's May 8 truck entry","Dr Truck 15,000 / Cr Cash 2,000 / Cr Notes Payable 13,000."],
+["w23","JJ's May 18 sale of parts at cost on account","Dr Accounts Receivable 150 / Cr Tools &amp; Equipment 150. No revenue, because sold at cost."],
+["w23","JJ's ending cash balance","4,125"],
+["w34","Balance sheet describes…","Where the enterprise stands at a specific date."],
+["w34","Income statement depicts…","Revenues and expenses for a designated period. Net income = revenues − expenses."],
+["w34","Statement of cash flows depicts…","The ways cash changed during a period."],
+["w34","Operating activities","Cash effects of revenue and expense transactions."],
+["w34","Investing activities","Cash effects of purchasing and selling assets."],
+["w34","Financing activities","Cash effects of transactions with owners and creditors."],
+["w34","What does the income statement exclude?","Investments by owners and payments to owners."],
+["w34","JJ's key totals","Net income 700. Operating +700, investing (4,575), financing +8,000, cash up 4,125. Assets 21,850 = liabilities 13,150 + equity 8,700."],
+["w56","When are adjusting entries needed?","Whenever revenue or expenses affect more than one accounting period."],
+["w56","What does every adjusting entry involve?","A revenue or expense account AND an asset or liability account."],
+["w56","Four types of adjusting entries","Convert assets to expenses; accrue unpaid expenses; convert liabilities to revenue; accrue uncollected revenue."],
+["w56","Asset → expense entry pattern","Dr Expense / Cr Asset (e.g. insurance 2,400 ÷ 12 = 200 per month)."],
+["w56","Liability → revenue entry pattern","Dr Unearned revenue / Cr Revenue (e.g. 6,000 ÷ 12 = 500 per month)."],
+["w56","Accrue unpaid expense pattern","Dr Expense / Cr Payable (e.g. wages 3,000 at May 31)."],
+["w56","Accrue uncollected revenue pattern","Dr Receivable / Cr Revenue (e.g. interest 170 at Jan 31)."],
+["w56","Depreciation definition","Systematic allocation of the cost of a depreciable asset to expense. Only an estimate."],
+["w56","Straight-line formula","Cost ÷ estimated useful life. Mower 2,500 ÷ 50 = 50/month. Truck 15,000 ÷ 60 = 250/month."],
+["w56","Depreciation adjusting entry","Dr Depreciation expense / Cr Accumulated depreciation."],
+["w56","What is accumulated depreciation?","A contra-asset (credit balance) deducted from the asset on the balance sheet."],
+["w56","Four depreciation methods","Straight-line, units of production, double-declining balance, sum-of-the-years' digits."],
+["w56","Which methods are accelerated?","Double-declining balance and sum-of-the-years' digits."],
+["w56","Income tax accrual entry","Dr Income taxes expense / Cr Income taxes payable (final adjusting entry)."],
+["w56","June 2 payroll entry (5,000, with 3,000 accrued)","Dr Wages expense 2,000, Dr Wages payable 3,000 / Cr Cash 5,000."],
+["w56","Feb 15 interest collection (320, with 170 accrued)","Dr Cash 320 / Cr Interest revenue 150, Cr Interest receivable 170."],
+["w56","Order of the accounting cycle (slides)","Journalize, post to ledger, trial balance, adjusting entries, adjusted trial balance."]
+].map((c,i)=>({id:i,w:c[0],f:c[1],b:c[2]}));
+
+let cDeck=[],cIdx=0,cFlip=false,cFilter="all",known=new Set(store.get("ak_known",[]));
+function cBuild(){
+  let base=CARDS.filter(c=>cFilter==="all"||c.w===cFilter);
+  if(cFilter==="missed")base=CARDS.filter(c=>!known.has(c.id));
+  cDeck=base.slice();cIdx=0;cFlip=false;cDraw();
+}
+function cDraw(){
+  const el=$("#theCard");
+  if(!cDeck.length){el.className="card";el.textContent="Nothing here. Every card in this set is marked known.";$("#cardCount").textContent="0 cards";$("#cardTag").textContent="";return}
+  const c=cDeck[cIdx%cDeck.length];
+  el.className="card"+(cFlip?" back":"");
+  el.innerHTML=cFlip?c.b:c.f;
+  $("#cardCount").textContent=`Card ${(cIdx%cDeck.length)+1} of ${cDeck.length}`;
+  $("#cardTag").textContent=`${WK[c.w]} · ${cFlip?"answer":"question"}`;
+  const kn=CARDS.filter(x=>known.has(x.id)).length;
+  $("#cardMeter").style.width=(100*kn/CARDS.length)+"%";
+}
+function cNext(gotIt){
+  if(!cDeck.length)return;
+  const c=cDeck[cIdx%cDeck.length];
+  if(gotIt){known.add(c.id);cDeck.splice(cIdx%cDeck.length,1)}
+  else{known.delete(c.id);cDeck.push(cDeck.splice(cIdx%cDeck.length,1)[0])}
+  store.set("ak_known",[...known]);cFlip=false;if(cIdx>=cDeck.length)cIdx=0;cDraw();
+}
+(function(){
+  const f=[["all","All"],["w1","Week 1"],["w23","Weeks 2–3"],["w34","Weeks 3–4"],["w56","Weeks 5–6"],["missed","Not yet known"]];
+  $("#cardFilter").innerHTML=f.map(x=>`<button class="chip" data-f="${x[0]}" aria-pressed="${x[0]==="all"}">${x[1]}</button>`).join("");
+  $("#cardFilter").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;cFilter=b.dataset.f;
+    document.querySelectorAll("#cardFilter .chip").forEach(x=>x.setAttribute("aria-pressed",x===b));cBuild()});
+  $("#theCard").addEventListener("click",()=>{cFlip=!cFlip;cDraw()});
+  $("#cFlip").addEventListener("click",()=>{cFlip=!cFlip;cDraw()});
+  $("#cGot").addEventListener("click",()=>cNext(true));
+  $("#cMiss").addEventListener("click",()=>cNext(false));
+  $("#cShuf").addEventListener("click",()=>{cDeck=shuffle(cDeck);cIdx=0;cFlip=false;cDraw()});
+  $("#cReset").addEventListener("click",()=>{known=new Set();store.set("ak_known",[]);cBuild()});
+  document.addEventListener("keydown",e=>{
+    if(!$("#p-cards").classList.contains("on"))return;
+    if(e.key===" "||e.key==="Enter"){if(document.activeElement.tagName==="BUTTON")return;e.preventDefault();cFlip=!cFlip;cDraw()}
+    else if(e.key==="ArrowRight")cNext(true);else if(e.key==="ArrowLeft")cNext(false);
+  });
+  cBuild();
+})();
+
+/* ---------- quiz ---------- */
+// [week, question, options (first is correct), explanation]
+const QS=[
+["w1","Which of these is NOT one of the three primary financial statements?",["Trial balance","Income statement","Balance sheet","Statement of cash flows"],"The primary statements are the income statement, balance sheet and statement of cash flows. A trial balance is an internal working list of ledger balances."],
+["w1","Which user of accounting information is INTERNAL?",["Plant manager","Creditor","Labor union","Government agency"],"Internal users are managers inside the business: board, CEO, CFO, VPs, business unit, plant and store managers, supervisors."],
+["w1","Management accounting information is mainly oriented toward the…",["Future","Past only","Tax authority","Stock exchange"],"Management accounting is future-oriented, timely, tied to a decision maker, and a means to an end."],
+["w1","Which is NOT one of the institutional features that protect the integrity of accounting information?",["The marketing department","GAAP","Internal control structure","Audits"],"The slide lists GAAP, FASB, SEC, internal control structure, audits and legislation."],
+["w1","Owner's equity equals…",["Capital + Revenues − Expenses − Drawings","Capital − Revenues + Expenses + Drawings","Assets + Liabilities","Capital + Expenses − Revenues"],"Revenues raise equity, expenses and drawings lower it."],
+["w1","Which type of account is INCREASED by a debit?",["Expense","Revenue","Liability","Capital"],"Assets and expenses increase with debits. Liabilities, revenue and capital increase with credits."],
+["w1","Which account normally has a CREDIT balance?",["Notes payable","Cash","Rent expense","Equipment"],"Liabilities have credit balances. Assets and expenses have debit balances."],
+["w1","A customer pays in advance for services you have not yet delivered. How is the cash received recorded?",["Credit to unearned revenue (a liability)","Credit to revenue immediately","Debit to accounts receivable","Debit to expense"],"You owe the service, so it is a liability until earned."],
+["w1","You pay a full year of insurance in advance. Until it is used, the payment is a(n)…",["Asset (deferred expense)","Expense","Liability","Revenue"],"Costs that benefit more than one period are first recorded as assets and expensed as used."],
+["w1","An accrued expense is one that has been…",["Incurred but not yet paid","Paid but not yet incurred","Paid and incurred","Estimated but unlikely"],"Accrued expenses create a liability, such as wages payable."],
+["w1","A contingent liability is…",["A potential liability that depends on a future event","A liability due within one year","A liability to the owner","A liability already paid"],"It may or may not occur."],
+["w1","The owner withdraws cash for personal use. The effect is…",["Cash down and owner's equity down, not an expense","Cash down and expenses up","Cash down and liabilities down","No effect on the equation"],"Drawings reduce equity directly and never appear on the income statement."],
+["w1","Financial reporting should help users assess the amount, timing and uncertainty of future…",["Cash flows","Tax rates","Staff changes","Market shares"],"This is one of the general objectives of financial reporting."],
+
+["w23","On May 8 JJ's buys a 15,000 truck with 2,000 cash and a 13,000 note. The correct entry is…",["Dr Truck 15,000 / Cr Cash 2,000 / Cr Notes Payable 13,000","Dr Truck 15,000 / Cr Cash 15,000","Dr Truck 2,000, Dr Notes Payable 13,000 / Cr Cash 15,000","Dr Cash 2,000, Dr Notes Payable 13,000 / Cr Truck 15,000"],"The asset is debited in full. The cash paid and the new liability are credited, and 2,000 + 13,000 = 15,000."],
+["w23","JJ's buys repair parts for 300 on account. The entry is…",["Dr Tools &amp; Equipment 300 / Cr Accounts Payable 300","Dr Accounts Payable 300 / Cr Tools &amp; Equipment 300","Dr Tools &amp; Equipment 300 / Cr Cash 300","Dr Expenses 300 / Cr Cash 300"],"Asset up (debit), liability up (credit)."],
+["w23","JJ's sells half the parts to ABC Lawns for 150 (equal to cost) on account. What is recorded?",["Dr Accounts Receivable 150 / Cr Tools &amp; Equipment 150","Dr Cash 150 / Cr Services Revenue 150","Dr Accounts Receivable 150 / Cr Services Revenue 150","Dr Tools &amp; Equipment 150 / Cr Accounts Receivable 150"],"Sold at cost on credit: one asset swaps for another, with no gain or loss."],
+["w23","ABC Lawns pays 75 of the 150 it owes. After this, the receivable from ABC is…",["75","150","225","0"],"150 debit − 75 credit = 75 debit balance."],
+["w23","JJ's cash balance on May 31 is…",["4,125","4,175","3,925","8,000"],"8,000 − 2,500 − 2,000 + 75 − 150 + 750 − 50 = 4,125. (4,175 is the balance before the 50 gasoline.)"],
+["w23","JJ's Accounts Payable ending balance on May 31 is…",["150 credit","300 credit","450 credit","0"],"300 credit on May 11, 150 debit on May 28, so 150 credit."],
+["w23","JJ's Tools &amp; Equipment ending balance on May 31 is…",["2,650","2,500","2,800","2,350"],"2,500 + 300 − 150 = 2,650."],
+["w23","In double-entry accounting…",["Every transaction has equal debits and credits","Debits always exceed credits","Only assets are debited","Each transaction affects exactly two accounts"],"Equal debits and credits keep A = L + OE in balance. A transaction can touch more than two accounts, like the truck purchase."],
+["w23","Which side of a T-account is the debit side?",["Left","Right","Top","Whichever side is larger"],"Debit is left, credit is right."],
+["w23","Posting means…",["Copying journal entries into the ledger accounts","Writing the first record of a transaction","Preparing financial statements","Auditing the ledger"],"Journal first, then post to the ledger."],
+["w23","Which ledger format has a running Balance column?",["American type","British type","Both","Neither"],"The American format shows Date, Description, Ref, Debit, Credit, Balance. The British format is two-sided."],
+["w23","May 29: JJ's gets 750 cash for lawn services. The entry is…",["Dr Cash 750 / Cr Services Revenue 750","Dr Services Revenue 750 / Cr Cash 750","Dr Accounts Receivable 750 / Cr Cash 750","Dr Cash 750 / Cr Capital 750"],"Cash is an asset (up, debit). Revenue is up with a credit."],
+["w23","Jill invests 8,000 in the business. The effect on the accounting equation is…",["Assets up 8,000 and owner's equity up 8,000","Assets up 8,000 and liabilities up 8,000","Assets down 8,000","Only equity changes"],"Dr Cash 8,000 / Cr Capital 8,000."],
+
+["w34","Which statement reports the position of a business at one specific date?",["Balance sheet","Income statement","Statement of cash flows","Statement of cash receipts"],"The balance sheet is a snapshot. The other two cover a period."],
+["w34","JJ's net income for May (revenue 750, gasoline 50) is…",["700","750","4,125","8,700"],"Revenues − expenses = 750 − 50."],
+["w34","On the statement of cash flows, the truck purchase is…",["An investing activity","An operating activity","A financing activity","Not reported"],"Buying and selling assets is investing."],
+["w34","The owner's 8,000 investment is…",["A financing activity and not on the income statement","An operating activity and on the income statement","Revenue","An investing activity"],"Transactions with owners are financing. Owner investments and payments are never on the income statement."],
+["w34","JJ's net cash used by investing activities for May is…",["(4,575)","(4,500)","(2,500)","700"],"−2,500 mower −2,000 truck −150 parts +75 collection = −4,575."],
+["w34","JJ's net cash provided by operating activities for May is…",["700","750","8,000","4,125"],"Cash from services 750 minus cash paid for expenses 50."],
+["w34","JJ's cash increase for May is…",["4,125","700","8,000","(4,575)"],"700 − 4,575 + 8,000 = 4,125."],
+["w34","JJ's total owner's equity on May 31 (capital 8,000 plus net income) is…",["8,700","8,000","700","21,850"],"Assets 21,850 = liabilities 13,150 + equity 8,700."],
+["w34","Which items are reported on the income statement?",["Revenue and expense transactions","Owner investments","Purchases of equipment","Loan proceeds"],"Only revenues and expenses. Investments, asset purchases and loans are balance sheet or cash flow items."],
+["w34","Operating activities on the cash flow statement include…",["Cash effects of revenue and expense transactions","Cash effects of buying and selling assets","Cash effects of transactions with owners and creditors","Only non-cash items"],"Investing is assets, financing is owners and creditors."],
+
+["w56","Adjusting entries are needed whenever…",["Revenue or expenses affect more than one accounting period","Cash is paid","A new customer is added","The owner invests"],"Timing differences across periods are the whole reason for adjustments."],
+["w56","Every adjusting entry involves…",["A revenue or expense and an asset or liability","Cash and an expense","Two asset accounts","Capital and a liability"],"One income statement account and one balance sheet account. Cash is not part of it."],
+["w56","Webb Co. buys a 12-month insurance policy for 2,400 on Jan 1. The adjusting entry at Jan 31 is…",["Dr Insurance Expense 200 / Cr Unexpired Insurance 200","Dr Unexpired Insurance 200 / Cr Insurance Expense 200","Dr Insurance Expense 2,400 / Cr Cash 2,400","Dr Insurance Expense 200 / Cr Cash 200"],"2,400 ÷ 12 = 200. Expense up, asset down."],
+["w56","Webb's prepaid insurance balance after three months of adjusting entries is…",["1,800","2,200","600","2,400"],"2,400 − 3 × 200 = 1,800."],
+["w56","Webb receives 6,000 on Jan 1 for a 12-month rental. The Jan 31 adjusting entry is…",["Dr Unearned Rental Revenue 500 / Cr Rental Revenue 500","Dr Rental Revenue 500 / Cr Unearned Rental Revenue 500","Dr Cash 500 / Cr Rental Revenue 500","Dr Unearned Rental Revenue 6,000 / Cr Rental Revenue 6,000"],"6,000 ÷ 12 = 500 earned. Liability down, revenue up."],
+["w56","On May 31 Webb owes employees 3,000 of wages, payday June 2. The adjusting entry is…",["Dr Wages Expense 3,000 / Cr Wages Payable 3,000","Dr Wages Payable 3,000 / Cr Wages Expense 3,000","Dr Wages Expense 3,000 / Cr Cash 3,000","Dr Cash 3,000 / Cr Wages Payable 3,000"],"Expense incurred, unpaid, so a liability."],
+["w56","On June 2 Webb pays the 5,000 weekly payroll (3,000 accrued in May). The entry is…",["Dr Wages Expense 2,000, Dr Wages Payable 3,000 / Cr Cash 5,000","Dr Wages Expense 5,000 / Cr Cash 5,000","Dr Wages Payable 5,000 / Cr Cash 5,000","Dr Wages Expense 3,000, Dr Wages Payable 2,000 / Cr Cash 5,000"],"The May portion clears the payable. Only the June portion is June's expense."],
+["w56","On Jan 31 the bank owes Webb 170 of interest. The adjusting entry is…",["Dr Interest Receivable 170 / Cr Interest Revenue 170","Dr Cash 170 / Cr Interest Revenue 170","Dr Interest Revenue 170 / Cr Interest Receivable 170","Dr Interest Receivable 170 / Cr Cash 170"],"Revenue earned, not collected: receivable."],
+["w56","On Feb 15 Webb collects 320 of interest (170 accrued in January). The entry is…",["Dr Cash 320 / Cr Interest Revenue 150, Cr Interest Receivable 170","Dr Cash 320 / Cr Interest Revenue 320","Dr Cash 320 / Cr Interest Receivable 320","Dr Cash 150 / Cr Interest Revenue 150"],"Only 150 relates to February. 170 settles January's receivable."],
+["w56","JJ's mower costs 2,500 and has a 50-month life. Straight-line monthly depreciation is…",["50","25","250","2,450"],"2,500 ÷ 50."],
+["w56","JJ's truck costs 15,000 over 60 months. Monthly depreciation is…",["250","150","300","15,000"],"15,000 ÷ 60."],
+["w56","Accumulated depreciation is a…",["Contra-asset with a credit balance","Liability","Expense with a debit balance","Revenue account"],"It is deducted from the related asset on the balance sheet."],
+["w56","The depreciation adjusting entry is…",["Dr Depreciation Expense / Cr Accumulated Depreciation","Dr Accumulated Depreciation / Cr Depreciation Expense","Dr Depreciation Expense / Cr Cash","Dr Equipment / Cr Depreciation Expense"],"Expense up, contra-asset up (credit). Cash is not involved."],
+["w56","Which depreciation method is based on actual usage or output?",["Units of production","Straight-line","Double-declining balance","Sum-of-the-years' digits"],"Straight-line is time-based. DDB and SYD are accelerated."],
+["w56","JJ's mower after one month of depreciation has a book value of…",["2,450","2,500","50","2,550"],"Cost 2,500 − accumulated depreciation 50."],
+["w56","A corporation accrues income taxes of 780 at year end. The entry is…",["Dr Income Taxes Expense 780 / Cr Income Taxes Payable 780","Dr Income Taxes Payable 780 / Cr Income Taxes Expense 780","Dr Income Taxes Expense 780 / Cr Cash 780","Dr Retained Earnings 780 / Cr Cash 780"],"Expense incurred, owed to the tax authority."],
+["w56","Webb forgets to record the 3,000 of accrued wages at year end. The effect is…",["Expenses and liabilities understated, net income overstated","Expenses and liabilities overstated, net income understated","Assets overstated only","No effect"],"Leaving out an expense inflates profit, and the unpaid debt is missing from liabilities."],
+["w56","Which is an example of converting a liability to revenue?",["Airline ticket sales","Wages payable","Depreciation","Interest earned but not collected"],"Cash comes first, service later. Season tickets are the other slide example."],
+["w56","Which are examples of accruing uncollected revenue?",["Interest earned and work completed but not yet billed","Depreciation and supplies","Wages and property taxes","Airline tickets and season tickets"],"Revenue is earned first, cash comes later."]
+].map((q,i)=>({id:i,w:q[0],q:q[1],o:q[2],e:q[3]}));
+
+let qWeeks=new Set(["w1","w23","w34","w56"]),qLen="20",run=null;
+(function(){
+  $("#qWeeks").innerHTML=Object.keys(WK).map(k=>`<button class="chip" data-w="${k}" aria-pressed="true">${WK[k]} · ${WL[k]}</button>`).join("");
+  $("#qWeeks").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const k=b.dataset.w;
+    if(qWeeks.has(k)){if(qWeeks.size>1)qWeeks.delete(k)}else qWeeks.add(k);
+    b.setAttribute("aria-pressed",qWeeks.has(k))});
+  $("#qLen").innerHTML=[["10","10 questions"],["20","20 questions"],["all","All available"]].map(x=>`<button class="chip" data-l="${x[0]}" aria-pressed="${x[0]==="20"}">${x[1]}</button>`).join("");
+  $("#qLen").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;qLen=b.dataset.l;
+    document.querySelectorAll("#qLen .chip").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+  $("#qStart").addEventListener("click",()=>{
+    let pool=shuffle(QS.filter(q=>qWeeks.has(q.w)));
+    if(qLen!=="all")pool=pool.slice(0,+qLen);
+    startQuiz(pool);
+  });
+  const last=store.get("ak_lastmiss",[]);
+  if(last.length){$("#qRetry").hidden=false;$("#qRetry").textContent=`Retry last ${last.length} misses`}
+  $("#qRetry").addEventListener("click",()=>startQuiz(shuffle(QS.filter(q=>last.includes(q.id)))));
+})();
+function startQuiz(pool){
+  run={pool,i:0,score:0,miss:[],byW:{}};
+  $("#quizSetup").hidden=true;$("#quizDone").hidden=true;$("#quizRun").hidden=false;showQ();
+}
+function showQ(){
+  const q=run.pool[run.i];
+  const opts=shuffle(q.o.map((t,i)=>({t,ok:i===0})));
+  const box=$("#quizRun");
+  box.innerHTML=`<div class="row" style="justify-content:space-between"><span class="tag">Question ${run.i+1} of ${run.pool.length} · ${WK[q.w]}</span><span class="tag">Score ${run.score}</span></div>
+    <div class="meter"><i style="width:${100*run.i/run.pool.length}%"></i></div>
+    <div class="q">${q.q}</div><div id="opts"></div><div id="fb"></div>`;
+  const wrap=$("#opts");
+  opts.forEach(o=>{const b=document.createElement("button");b.className="opt";b.innerHTML=o.t;
+    b.addEventListener("click",()=>answer(o,opts,wrap,q));wrap.appendChild(b)});
+}
+function answer(o,opts,wrap,q){
+  const btns=[...wrap.children];btns.forEach((b,i)=>{b.disabled=true;if(opts[i].ok)b.classList.add("ok");else if(opts[i]===o)b.classList.add("no")});
+  run.byW[q.w]=run.byW[q.w]||[0,0];run.byW[q.w][1]++;
+  if(o.ok){run.score++;run.byW[q.w][0]++}else run.miss.push(q.id);
+  const last=run.i===run.pool.length-1;
+  $("#fb").innerHTML=`<div class="expl"><b>${o.ok?"Correct.":"Not quite."}</b> ${q.e}</div><button class="btn primary" id="qNext">${last?"See results":"Next question"}</button>`;
+  $("#qNext").addEventListener("click",()=>{if(last)finishQuiz();else{run.i++;showQ()}});
+  $("#qNext").focus();
+}
+function finishQuiz(){
+  store.set("ak_lastmiss",run.miss);
+  const pct=Math.round(100*run.score/run.pool.length);
+  const verdict=pct>=85?"Exam ready on these topics.":pct>=65?"Solid base. Fix the misses below.":"Go back to the Revise tab for the weak topics, then retry.";
+  $("#quizRun").hidden=true;$("#quizDone").hidden=false;
+  const missed=run.miss.map(id=>QS[id]);
+  $("#quizDone").innerHTML=`<div class="box"><div class="score">${run.score} / ${run.pool.length} <span style="font-size:1rem;color:var(--muted)">${pct}%</span></div><p>${verdict}</p>
+    ${Object.keys(run.byW).map(k=>`<div class="bar"><b>${WK[k]}</b><div class="meter"><i style="width:${100*run.byW[k][0]/run.byW[k][1]}%"></i></div><span class="mono">${run.byW[k][0]}/${run.byW[k][1]}</span></div>`).join("")}
+    <div class="row" style="margin-top:14px"><button class="btn primary" id="qAgain">New quiz</button>${missed.length?`<button class="btn" id="qMissRetry">Retry ${missed.length} missed</button>`:""}</div></div>
+    ${missed.length?`<h3>Review what you missed</h3><div class="box">${missed.map(q=>`<div class="miss"><div class="tag">${WK[q.w]}</div><div><b>${q.q}</b></div><div style="color:var(--good);margin-top:4px">Answer: ${q.o[0]}</div><div class="sub">${q.e}</div></div>`).join("")}</div>`:""}`;
+  $("#qAgain").addEventListener("click",()=>{$("#quizDone").hidden=true;$("#quizSetup").hidden=false;
+    const l=store.get("ak_lastmiss",[]);$("#qRetry").hidden=!l.length;$("#qRetry").textContent=`Retry last ${l.length} misses`;window.scrollTo({top:0})});
+  const mr=$("#qMissRetry");if(mr)mr.addEventListener("click",()=>startQuiz(shuffle(missed)));
+  window.scrollTo({top:0});
+}
+
+/* ---------- journal lab ---------- */
+const LAB=[
+["w23","The owner invests 50,000 cash to start the business.",[["Cash",50000,null],["Capital",null,50000]]],
+["w23","Buys equipment for 12,000: pays 4,000 cash, rest on account.",[["Equipment",12000,null],["Cash",null,4000],["Accounts Payable",null,8000]]],
+["w23","Performs services on credit for 3,000.",[["Accounts Receivable",3000,null],["Service Revenue",null,3000]]],
+["w23","Collects 1,200 from a credit customer.",[["Cash",1200,null],["Accounts Receivable",null,1200]]],
+["w23","Pays 800 cash for rent.",[["Rent Expense",800,null],["Cash",null,800]]],
+["w23","Pays 2,000 of the amount owed to suppliers.",[["Accounts Payable",2000,null],["Cash",null,2000]]],
+["w23","Owner withdraws 500 cash for personal use.",[["Drawings",500,null],["Cash",null,500]]],
+["w56","Month 1 adjustment: a 3,600 two-year insurance policy was paid in advance (24 months).",[["Insurance Expense",150,null],["Prepaid Insurance",null,150]]],
+["w56","Month-end: 6,000 was collected in advance for 12 months of service. Record one month earned.",[["Unearned Service Revenue",500,null],["Service Revenue",null,500]]],
+["w56","Month-end: employees have earned 3,000 of wages not yet paid.",[["Wages Expense",3000,null],["Wages Payable",null,3000]]],
+["w56","Month-end: the bank owes you 170 of interest not yet received.",[["Interest Receivable",170,null],["Interest Revenue",null,170]]],
+["w56","Month-end: a machine costing 9,000 has a 60-month life. Straight-line depreciation for one month.",[["Depreciation Expense",150,null],["Accumulated Depreciation",null,150]]],
+["w56","Payday: pay 5,000 payroll, of which 3,000 was accrued last month.",[["Wages Expense",2000,null],["Wages Payable",3000,null],["Cash",null,5000]]],
+["w56","Year-end: accrue income taxes of 780.",[["Income Taxes Expense",780,null],["Income Taxes Payable",null,780]]]
+];
+let labMark=store.get("ak_lab",{});
+function labDraw(){
+  $("#labList").innerHTML=LAB.map((d,i)=>`<div class="box" style="margin-bottom:10px" data-i="${i}">
+    <span class="tag">${WK[d[0]]} · Drill ${i+1}</span>
+    <p style="margin:4px 0 10px"><b>${d[1]}</b></p>
+    <div class="ans" hidden>${je(d[2])}<div class="row" style="margin-top:8px"><button class="btn good" data-m="1">I had it</button><button class="btn bad" data-m="0">I missed it</button></div></div>
+    <button class="btn show">Reveal entry</button>
+    ${labMark[i]!=null?`<span class="tag" style="margin-left:8px;color:var(--${labMark[i]?"good":"bad"})">${labMark[i]?"Marked correct":"Marked to retry"}</span>`:""}
+  </div>`).join("");
+  const done=Object.keys(labMark).length,ok=Object.values(labMark).filter(Boolean).length;
+  $("#labScore").textContent=`${ok} correct of ${done} attempted · ${LAB.length} drills`;
+}
+$("#labList").addEventListener("click",e=>{
+  const card=e.target.closest("[data-i]");if(!card)return;
+  if(e.target.classList.contains("show")){card.querySelector(".ans").hidden=false;e.target.hidden=true}
+  else if(e.target.dataset.m!=null){labMark[card.dataset.i]=+e.target.dataset.m;store.set("ak_lab",labMark);
+    const open=[...document.querySelectorAll("#labList [data-i]")].map(c=>!c.querySelector(".ans").hidden);labDraw();
+    document.querySelectorAll("#labList [data-i]").forEach((c,i)=>{if(open[i]){c.querySelector(".ans").hidden=false;c.querySelector(".show").hidden=true}})}
+});
+$("#labReset").addEventListener("click",()=>{labMark={};store.set("ak_lab",{});labDraw()});
+labDraw();
+
+/* ---------- PakTel ---------- */
+const COLS=["Cash","Land","Building","Office Equip.","Notes Payable","Accounts Payable","Capital Stock","Retained (Rev − Exp)"];
+const START=[87000,490000,650000,123000,310000,80000,960000,0];
+const TX=[
+ ["Jan 7","Owner invests 230,000",[230000,0,0,0,0,0,230000,0]],
+ ["Jan 9","Land 235,000 + building 155,000 = 390,000. Cash 88,500, note for 301,500",[-88500,235000,155000,0,301500,0,0,0]],
+ ["Jan 15","Computers on account 39,500",[0,0,0,39500,0,39500,0,0]],
+ ["Jan 20","Bank loan 220,000 (note payable)",[220000,0,0,0,220000,0,0,0]],
+ ["Jan 21","Pay 68,500 of accounts payable",[-68500,0,0,0,0,-68500,0,0]],
+ ["Jan 28","Pay 24,000 on notes payable",[-24000,0,0,0,-24000,0,0,0]],
+ ["Jan 31","Revenue 336,000 and expenses 240,000, both cash (net +96,000)",[96000,0,0,0,0,0,0,96000]]
+];
+let pkShown=0;
+function pkDraw(){
+  let cur=START.slice();
+  const head=`<tr><th></th>${COLS.map((c,i)=>`<th class="n ${i===4?"":""}">${c}</th>`).join("")}</tr>`;
+  const sums=a=>({A:a[0]+a[1]+a[2]+a[3],L:a[4]+a[5],E:a[6]+a[7]});
+  let rows=`<tr class="bal"><td>Dec 31 balances</td>${cur.map(v=>`<td class="n">${fmt(v)}</td>`).join("")}</tr>`;
+  TX.forEach((t,i)=>{
+    cur=cur.map((v,j)=>v+t[2][j]);
+    const s=sums(cur);const show=i<pkShown;
+    rows+=`<tr class="eff ${show?"":"hid"}"><td>${t[0]}: ${t[1]}</td>${t[2].map(v=>`<td class="n">${v?(v>0?"+":"")+v.toLocaleString("en-US"):""}</td>`).join("")}</tr>`;
+    rows+=`<tr class="bal ${show?"":"hid"}"><td>Balance <span class="chk ${s.A===s.L+s.E?"ok":""}">A ${s.A.toLocaleString("en-US")} = L + E ${(s.L+s.E).toLocaleString("en-US")}</span></td>${cur.map(v=>`<td class="n">${fmt(v)}</td>`).join("")}</tr>`;
+  });
+  $("#pkTable").innerHTML=head+rows;
+  const done=pkShown>=TX.length;
+  $("#pkFinal").hidden=!done;
+  $("#pkNext").disabled=done;
+  if(done){
+    const s=sums(cur);
+    $("#pkFinal").innerHTML=`<div class="grid2" style="margin-top:12px">
+      <div class="box"><h3 style="margin-top:0">Ending balance sheet, Jan 31</h3>
+        <table><tr><td>Cash</td><td class="n">${fmt(cur[0])}</td></tr><tr><td>Land</td><td class="n">${fmt(cur[1])}</td></tr><tr><td>Building</td><td class="n">${fmt(cur[2])}</td></tr><tr><td>Office equipment</td><td class="n">${fmt(cur[3])}</td></tr>
+        <tr><td><b>Total assets</b></td><td class="n"><b>${fmt(s.A)}</b></td></tr>
+        <tr><td>Notes payable</td><td class="n">${fmt(cur[4])}</td></tr><tr><td>Accounts payable</td><td class="n">${fmt(cur[5])}</td></tr>
+        <tr><td>Capital stock</td><td class="n">${fmt(cur[6])}</td></tr><tr><td>Retained earnings (Jan profit)</td><td class="n">${fmt(cur[7])}</td></tr>
+        <tr><td><b>Total liabilities + equity</b></td><td class="n"><b>${fmt(s.L+s.E)}</b></td></tr></table></div>
+      <div class="box"><h3 style="margin-top:0">Answers worth knowing</h3>
+        <ul style="padding-left:18px;margin:0">
+          <li>January net income: 336,000 − 240,000 = <b>96,000</b>.</li>
+          <li>Total liabilities: <b>${fmt(s.L)}</b>. Total equity: <b>${fmt(s.E)}</b>.</li>
+          <li>Jan 9 note payable = 390,000 − 88,500 = <b>301,500</b>.</li>
+          <li>Notes payable path: 310,000 + 301,500 + 220,000 − 24,000 = ${fmt(cur[4])}.</li>
+          <li>Accounts payable path: 80,000 + 39,500 − 68,500 = ${fmt(cur[5])}.</li>
+          <li>Cash path: 87,000 + 230,000 − 88,500 + 220,000 − 68,500 − 24,000 + 96,000 = ${fmt(cur[0])}.</li>
+        </ul></div></div>`;
+  }
+}
+$("#pkNext").addEventListener("click",()=>{if(pkShown<TX.length){pkShown++;pkDraw()}});
+$("#pkAll").addEventListener("click",()=>{pkShown=TX.length;pkDraw()});
+$("#pkReset").addEventListener("click",()=>{pkShown=0;pkDraw()});
+pkDraw();
+
+/* ---------- prompt ---------- */
+const PROMPT=`You are my accounting midterm examiner and tutor. My midterm is in 2 days. Use ONLY the scope below, which comes from my course slides (Financial & Managerial Accounting, Williams, Haka, Bettner, 13th edition).
+
+SCOPE
+Week 1 (Chapter 1): three types of accounting information (financial, managerial, tax); functions of an accounting system; internal vs external users; objectives of financial reporting and of management accounting; integrity of information (GAAP, FASB, SEC, internal control, audits, legislation); the elements (assets, liabilities, owner's equity, revenues, expenses); A = L + OE; OE = Capital + Revenues - Expenses - Drawings; rules of debit and credit; unearned revenue, deferred expense, accrued expense, contingent liability.
+Weeks 2-3: general journal entries, ledger, T-accounts, posting, double entry, British vs American ledger formats, running example JJ's Lawn Care Service (9 transactions in May 2005, ending cash 4,125).
+Weeks 3-4: income statement, balance sheet, statement of cash flows; operating, investing and financing activities; JJ's statements (net income 700, assets 21,850 = liabilities 13,150 + equity 8,700).
+Weeks 5-6 (Chapter 4): adjusting entries; converting assets to expenses; accruing unpaid expenses; converting liabilities to revenue; accruing uncollected revenue; depreciation (straight-line, units of production, double-declining balance, sum-of-the-years' digits); accumulated depreciation as a contra-asset; income tax accrual; adjusted trial balance.
+Practice question: PakTel Solutions, an accounting equation table with Rs. figures, 7 January transactions.
+
+HOW TO RUN THE SESSION
+1. Ask me one question at a time. Wait for my answer before revealing anything.
+2. Start with a 3-question diagnostic across all weeks, then focus on my weakest area.
+3. Mix formats: multiple choice, short definitions, "write the journal entry", "post to T-accounts and find the balance", "which financial statement and which section", and accounting-equation table problems like PakTel.
+4. Use fresh numbers, not the ones in the slides, but keep the same style of problem.
+5. After each answer, say correct or incorrect, give the right entry or working, and explain the reason in one or two sentences. If I am wrong, ask me a similar follow-up before moving on.
+6. Every 10 questions, show my score by week and name my three weakest topics.
+7. Increase difficulty when I get 3 in a row right. Include exam traps: sale at cost (no revenue), drawings (not an expense), net income vs cash change, partial payments of payables, accrued vs paid wages.
+8. When I say "exam mode", give a 20-question timed-style paper with no hints, then mark it and show a score breakdown.
+Begin with the diagnostic now.`;
+$("#promptBox").value=PROMPT;
+$("#copyPrompt").addEventListener("click",async()=>{
+  const m=$("#copyMsg");
+  try{await navigator.clipboard.writeText(PROMPT);m.textContent="Copied"}
+  catch(e){const t=$("#promptBox");t.focus();t.select();m.textContent="Selected. Press copy on your keyboard."}
+  setTimeout(()=>m.textContent="",2500);
+});
+</script>
+
+</body></html>
